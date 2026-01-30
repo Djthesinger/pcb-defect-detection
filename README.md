@@ -37,42 +37,44 @@ Modern interface with ttkbootstrap theme featuring:
 | **Image Processing** | OpenCV, Pillow | 4.9+, 10.2+ | Image manipulation |
 | **Training Platform** | Kaggle | - | Free GPU T4 |
 
-## Model Optimizations
+## Training Platform
 
-This project includes several optimizations for faster training without sacrificing performance:
+This project was trained on **Kaggle Notebooks** with the following configuration:
 
-- **50% Faster Training:** Reduced from 100 to 50 epochs (model converges at epoch 20)
-- **Smart Early Stopping:** 15-epoch patience for automatic termination
-- **Optimized Augmentations:** Balanced preprocessing speed and data diversity
-- **Enhanced Bbox Precision:** Improved loss weights for better localization
-- **Efficient Warmup:** Faster stabilization in first 3 epochs
+- **GPU:** NVIDIA Tesla T4 × 2 (15 GB VRAM each)
+- **RAM:** 30 GB
+- **Storage:** 299.8 GB available
+- **Training Duration:** 42 minutes
+- **Kaggle Notebook:** [View Training Results](https://www.kaggle.com/code/alainpaluku/pcb-defect-detection)
 
 ## Performance Results
 
 **Dataset:** [PCB Defects - Akhatova](https://www.kaggle.com/datasets/akhatova/pcb-defects)
-- **Total Images:** 1,386 annotated images
-- **Split:** 80% training / 10% validation / 10% test
+- **Total Images:** 693 annotated images
+- **Split:** 79.9% training (554 images) / 20.1% validation (139 images)
 - **Model:** YOLO11m (20M parameters)
-- **Training:** 50 epochs on GPU T4 (optimized from 100 epochs)
-- **Training Time:** Approximately 1-1.5 hours (50% faster than before)
+- **Training:** 100 epochs on GPU T4 × 2 (Kaggle)
+- **Training Time:** 42 minutes
+- **Training Date:** January 30, 2026
 
 ### Global Metrics
 | Metric | Score | Description |
 |----------|-------|-------------|
-| **Detection Precision** | **97.4%** | Mean Average Precision at IoU 0.5 |
-| **Mean Precision** | **96.6%** | Precision across all classes |
-| **Mean Recall** | **95.8%** | Detection rate |
-| **F1-Score** | **96.2%** | Precision-recall balance |
+| **Detection Precision (mAP@0.5)** | **96.4%** | Mean Average Precision at IoU 0.5 |
+| **Strict Precision (mAP@0.5:0.95)** | **53.8%** | Mean Average Precision at IoU 0.5-0.95 |
+| **Mean Precision** | **97.0%** | Precision across all classes |
+| **Mean Recall** | **92.5%** | Detection rate |
+| **F1-Score** | **94.7%** | Precision-recall balance |
 
-### Performance by Class
-| Class | Precision | Recall | Description |
-|--------|-----------|--------|-------------|
-| `missing_hole` | 99.5% | 100% | Missing drill hole |
-| `open_circuit` | 99.4% | 100% | Broken trace |
-| `mouse_bite` | 98.1% | 92.9% | Irregular edge |
-| `short` | 96.4% | 94.1% | Short circuit |
-| `spur` | 95.3% | 94.5% | Copper protrusion |
-| `spurious_copper` | 95.8% | 93.1% | Unwanted copper |
+### Training Configuration
+| Parameter | Value |
+|-----------|-------|
+| **GPU** | NVIDIA Tesla T4 × 2 |
+| **Epochs** | 100 |
+| **Batch Size** | 16 |
+| **Learning Rate** | 0.001 |
+| **Image Size** | 640×640 |
+| **Optimizer** | auto (AdamW) |
 
 ### Training Visualization
 
@@ -84,14 +86,12 @@ This project includes several optimizations for faster training without sacrific
 - Validation errors near zero after epoch 10
 - Learning rate smoothly decays from 0.01 to 0.0001
 
-**Optimizations Applied:**
-- Training reduced to 50 epochs (model converges at epoch 20)
-- Early stopping with 15-epoch patience
-- Faster warmup (3 epochs instead of 5)
-- Optimized augmentations for faster preprocessing
-- Improved bounding box precision with enhanced loss weights
-
-**Result:** 50% faster training time with maintained or improved performance.
+**Key Observations:**
+- Rapid convergence in first 40 epochs
+- Stable training with no overfitting
+- Validation errors follow training errors closely
+- Learning rate smoothly decays from 0.01 to 0.0001
+- Training completed in 42 minutes on GPU T4 × 2
 
 ### Sample Detection Results
 
