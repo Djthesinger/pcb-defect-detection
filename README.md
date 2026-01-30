@@ -60,8 +60,8 @@ This project was trained on **Kaggle Notebooks** with the following configuratio
 ### Global Metrics
 | Metric | Score | Description |
 |----------|-------|-------------|
-| **Detection Precision (mAP@0.5)** | **96.4%** | Mean Average Precision at IoU 0.5 |
-| **Strict Precision (mAP@0.5:0.95)** | **53.8%** | Mean Average Precision at IoU 0.5-0.95 |
+| **Detection Precision** | **96.4%** | Mean Average Precision at IoU 0.5 |
+| **Strict Precision** | **53.8%** | Mean Average Precision at multiple IoU thresholds |
 | **Mean Precision** | **97.0%** | Precision across all classes |
 | **Mean Recall** | **92.5%** | Detection rate |
 | **F1-Score** | **94.7%** | Precision-recall balance |
