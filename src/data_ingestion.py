@@ -1,4 +1,4 @@
-"""Data ingestion and conversion for PCB Defect Detection with YOLOv8."""
+"""Data ingestion and conversion for PCB Defect Detection with YOLO11."""
 
 import random
 import shutil
@@ -279,10 +279,10 @@ class DataIngestion:
                         seen_images.add(img_path)
     
     def create_yolo_dataset(self) -> Tuple[int, int]:
-        """Create YOLO format dataset."""
+        """Create YOLO format dataset with train/val splits."""
         logger.info("Creating YOLO structure...")
         
-        # Création des répertoires
+        # Create directories
         for split in ["train", "val"]:
             (self.yolo_path / "images" / split).mkdir(parents=True, exist_ok=True)
             (self.yolo_path / "labels" / split).mkdir(parents=True, exist_ok=True)

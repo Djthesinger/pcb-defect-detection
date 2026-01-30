@@ -15,32 +15,32 @@ class TestConfig(unittest.TestCase):
     """Test configuration."""
     
     def test_class_names_count(self):
-        """Test que 6 classes sont définies."""
+        """Test that 6 classes are defined."""
         self.assertEqual(len(Config.CLASS_NAMES), 6)
     
     def test_class_names_content(self):
-        """Test les noms de classes attendus."""
+        """Test expected class names."""
         expected = {"missing_hole", "mouse_bite", "open_circuit", "short", "spur", "spurious_copper"}
         self.assertEqual(set(Config.CLASS_NAMES), expected)
     
     def test_class_map_case_insensitive(self):
-        """Test que le mapping gère différentes casses."""
+        """Test that mapping handles different cases."""
         self.assertEqual(Config.CLASS_MAP["missing_hole"], 0)
         self.assertEqual(Config.CLASS_MAP["Missing_hole"], 0)
         self.assertEqual(Config.CLASS_MAP["short"], 3)
         self.assertEqual(Config.CLASS_MAP["Short"], 3)
     
     def test_num_classes_matches(self):
-        """Test que NUM_CLASSES correspond au nombre de classes."""
+        """Test that NUM_CLASSES matches the number of classes."""
         self.assertEqual(Config.NUM_CLASSES, len(Config.CLASS_NAMES))
     
     def test_output_path_is_path(self):
-        """Test que get_output_path retourne un Path."""
+        """Test that get_output_path returns a Path."""
         output = Config.get_output_path()
         self.assertIsInstance(output, Path)
     
     def test_create_custom_config(self):
-        """Test la création de configuration personnalisée."""
+        """Test custom configuration creation."""
         config = Config.create(epochs=100, batch_size=32)
         self.assertEqual(config.model.epochs, 100)
         self.assertEqual(config.model.batch_size, 32)
@@ -50,15 +50,15 @@ class TestModelConfig(unittest.TestCase):
     """Test ModelConfig dataclass."""
     
     def test_default_values(self):
-        """Test les valeurs par défaut."""
+        """Test default values."""
         cfg = ModelConfig()
-        self.assertEqual(cfg.name, "yolov8n.pt")
+        self.assertEqual(cfg.name, "yolo11m.pt")
         self.assertEqual(cfg.img_size, 640)
         self.assertEqual(cfg.batch_size, 16)
         self.assertEqual(cfg.epochs, 50)
     
     def test_custom_values(self):
-        """Test les valeurs personnalisées."""
+        """Test custom values."""
         cfg = ModelConfig(epochs=100, batch_size=32)
         self.assertEqual(cfg.epochs, 100)
         self.assertEqual(cfg.batch_size, 32)
@@ -68,17 +68,17 @@ class TestInferenceConfig(unittest.TestCase):
     """Test InferenceConfig dataclass."""
     
     def test_default_thresholds(self):
-        """Test les seuils par défaut."""
+        """Test default thresholds."""
         cfg = InferenceConfig()
-        self.assertEqual(cfg.conf_threshold, 0.25)
-        self.assertEqual(cfg.iou_threshold, 0.45)
+        self.assertEqual(cfg.conf_threshold, 0.3)
+        self.assertEqual(cfg.iou_threshold, 0.5)
 
 
 class TestImageExtensions(unittest.TestCase):
-    """Test des extensions d'images."""
+    """Test image extensions."""
     
     def test_common_extensions_included(self):
-        """Test que les extensions communes sont incluses."""
+        """Test that common extensions are included."""
         for ext in [".jpg", ".png", ".JPG", ".PNG"]:
             self.assertIn(ext, IMAGE_EXTENSIONS)
 
@@ -87,7 +87,7 @@ class TestImageItem(unittest.TestCase):
     """Test ImageItem dataclass."""
     
     def test_creation(self):
-        """Test la création d'un ImageItem."""
+        """Test ImageItem creation."""
         item = ImageItem(
             image_path=Path("test.jpg"),
             annotation_path=Path("test.xml"),
@@ -97,7 +97,7 @@ class TestImageItem(unittest.TestCase):
         self.assertEqual(item.source_type, "xml")
     
     def test_default_values(self):
-        """Test les valeurs par défaut."""
+        """Test default values."""
         item = ImageItem(image_path=Path("test.jpg"))
         self.assertIsNone(item.annotation_path)
         self.assertIsNone(item.class_name)
@@ -161,7 +161,7 @@ class TestDetector(unittest.TestCase):
         self.assertEqual(summary["defect_count"], 0)
     
     def test_get_summary_with_detections(self):
-        """Test get_summary avec détections."""
+        """Test get_summary with detections."""
         from src.detector import PCBInspector
         detections = [
             {"class_name": "short", "confidence": 0.9},

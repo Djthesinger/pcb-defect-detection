@@ -160,11 +160,18 @@ def find_directory_with_files(
 
 
 def format_metrics(metrics: Dict[str, float]) -> str:
-    """Format metrics for display."""
+    """Format metrics for display.
+    
+    Args:
+        metrics: Dictionary containing metric values
+        
+    Returns:
+        Formatted string with all metrics
+    """
     lines = [
-        f"Detection precision: {metrics.get('precision_detection', 0):.4f}",
-        f"Strict precision:    {metrics.get('precision_stricte', 0):.4f}",
-        f"Reliability:         {metrics.get('fiabilite', 0):.4f}",
-        f"Detection rate:      {metrics.get('taux_detection', 0):.4f}",
+        f"Detection Precision (mAP@0.5):     {metrics.get('detection_precision', 0):.4f}",
+        f"Strict Precision (mAP@0.5:0.95):   {metrics.get('strict_precision', 0):.4f}",
+        f"Mean Precision:                    {metrics.get('precision', 0):.4f}",
+        f"Mean Recall:                       {metrics.get('recall', 0):.4f}",
     ]
     return "\n".join(lines)

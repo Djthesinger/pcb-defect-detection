@@ -219,12 +219,20 @@ class PCBDetector:
     
     @staticmethod
     def extract_metrics(results: Any) -> Dict[str, float]:
-        """Extract metrics from validation results."""
+        """Extract metrics from validation results.
+        
+        Returns:
+            Dictionary with standardized metric names:
+            - detection_precision: mAP@0.5 (Mean Average Precision at IoU 0.5)
+            - strict_precision: mAP@0.5:0.95 (Mean Average Precision at IoU 0.5 to 0.95)
+            - precision: Mean Precision across all classes
+            - recall: Mean Recall across all classes
+        """
         return {
-            "detection_precision": float(results.box.map50),    # Mean AP at IoU 0.5 (mAP@0.5)
-            "strict_precision": float(results.box.map),         # Mean AP at IoU 0.5:0.95 (mAP@0.5:0.95)
-            "reliability": float(results.box.mp),               # Mean precision
-            "detection_rate": float(results.box.mr),            # Mean recall
+            "detection_precision": float(results.box.map50),    # mAP@0.5
+            "strict_precision": float(results.box.map),         # mAP@0.5:0.95
+            "precision": float(results.box.mp),                 # Mean Precision
+            "recall": float(results.box.mr),                    # Mean Recall
         }
     
     @classmethod

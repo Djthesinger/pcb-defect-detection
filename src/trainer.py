@@ -148,15 +148,15 @@ class TrainingManager:
         
         self.metrics = PCBDetector.extract_metrics(results)
         
-        # Styled metrics display
+        # Display metrics with visual indicators
         print("\n" + "=" * 50)
         print("📊 PERFORMANCE METRICS")
         print("=" * 50)
         
-        precision_detection = self.metrics.get('detection_precision', 0)
+        detection_precision = self.metrics.get('detection_precision', 0)
         strict_precision = self.metrics.get('strict_precision', 0)
-        reliability = self.metrics.get('reliability', 0)
-        detection_rate = self.metrics.get('detection_rate', 0)
+        precision = self.metrics.get('precision', 0)
+        recall = self.metrics.get('recall', 0)
         
         # Visual indicators
         def get_indicator(value: float) -> str:
@@ -169,14 +169,14 @@ class TrainingManager:
             else:
                 return "🔴 Needs improvement"
         
-        print(f"\n   Detection precision:  {precision_detection:.4f}  ({precision_detection*100:.1f}%)  {get_indicator(precision_detection)}")
-        print(f"   Strict precision:     {strict_precision:.4f}  ({strict_precision*100:.1f}%)  {get_indicator(strict_precision)}")
-        print(f"   Reliability:          {reliability:.4f}  ({reliability*100:.1f}%)  {get_indicator(reliability)}")
-        print(f"   Detection rate:       {detection_rate:.4f}  ({detection_rate*100:.1f}%)  {get_indicator(detection_rate)}")
+        print(f"\n   Detection Precision (mAP@0.5):     {detection_precision:.4f}  ({detection_precision*100:.1f}%)  {get_indicator(detection_precision)}")
+        print(f"   Strict Precision (mAP@0.5:0.95):   {strict_precision:.4f}  ({strict_precision*100:.1f}%)  {get_indicator(strict_precision)}")
+        print(f"   Mean Precision:                    {precision:.4f}  ({precision*100:.1f}%)  {get_indicator(precision)}")
+        print(f"   Mean Recall:                       {recall:.4f}  ({recall*100:.1f}%)  {get_indicator(recall)}")
         
-        # Global score
-        f1_score = 2 * (reliability * detection_rate) / (reliability + detection_rate) if (reliability + detection_rate) > 0 else 0
-        print(f"\n   F1-Score:   {f1_score:.4f}  ({f1_score*100:.1f}%)  {get_indicator(f1_score)}")
+        # F1-Score
+        f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+        print(f"\n   F1-Score:                          {f1_score:.4f}  ({f1_score*100:.1f}%)  {get_indicator(f1_score)}")
         
         print("=" * 50)
         
@@ -239,10 +239,10 @@ class TrainingManager:
 - Batch Size: {self.config.model.batch_size}
 
 ## Performance Metrics
-- Detection Precision: {self.metrics.get('detection_precision', 0):.4f} ({self.metrics.get('detection_precision', 0)*100:.1f}%)
-- Strict Precision: {self.metrics.get('strict_precision', 0):.4f} ({self.metrics.get('strict_precision', 0)*100:.1f}%)
-- Reliability: {self.metrics.get('reliability', 0):.4f} ({self.metrics.get('reliability', 0)*100:.1f}%)
-- Detection Rate: {self.metrics.get('detection_rate', 0):.4f} ({self.metrics.get('detection_rate', 0)*100:.1f}%)
+- Detection Precision (mAP@0.5): {self.metrics.get('detection_precision', 0):.4f} ({self.metrics.get('detection_precision', 0)*100:.1f}%)
+- Strict Precision (mAP@0.5:0.95): {self.metrics.get('strict_precision', 0):.4f} ({self.metrics.get('strict_precision', 0)*100:.1f}%)
+- Mean Precision: {self.metrics.get('precision', 0):.4f} ({self.metrics.get('precision', 0)*100:.1f}%)
+- Mean Recall: {self.metrics.get('recall', 0):.4f} ({self.metrics.get('recall', 0)*100:.1f}%)
 
 ## Exported Model Format
 
@@ -258,27 +258,6 @@ Place the model file in the `models/` directory:
 - `pcb_model.pt` - PyTorch model for inference
 
 The GUI will automatically load the PyTorch model.
-
-## Usage Examples
-
-See README.md for detailed usage instructions.
-"""
-        
-        summary_path = self.output_path / "MODEL_EXPORT_SUMMARY.md"
-        with open(summary_path, 'w', encoding='utf-8') as f:
-            f.write(summary_content)
-        
-        print(f"📄 Export summary: {summary_path}")
-- **Size**: ~40MB
-- **Platform**: Cross-platform, optimized for performance
-
-## Usage with GUI
-
-Place both model files in the `models/` directory:
-- `pcb_model.pt` - For compatibility
-- `pcb_model.onnx` - For best performance
-
-The GUI will automatically select the ONNX model for optimal performance.
 
 ## Usage Examples
 
@@ -380,14 +359,14 @@ See README.md for detailed usage instructions.
             
             # Final metrics
             final_metrics = f"""
-╔══════════════════════════════════════╗
-║     📊 FINAL RESULTS                 ║
-╠══════════════════════════════════════╣
-║  Detection precision: {self.metrics.get('detection_precision', 0):.4f} ({self.metrics.get('detection_precision', 0)*100:.1f}%)  ║
-║  Strict precision:    {self.metrics.get('strict_precision', 0):.4f} ({self.metrics.get('strict_precision', 0)*100:.1f}%)  ║
-║  Reliability:         {self.metrics.get('reliability', 0):.4f} ({self.metrics.get('reliability', 0)*100:.1f}%)  ║
-║  Detection rate:      {self.metrics.get('taux_detection', 0):.4f} ({self.metrics.get('taux_detection', 0)*100:.1f}%)  ║
-╚══════════════════════════════════════╝
++--------------------------------------+
+|     FINAL RESULTS                    |
++--------------------------------------+
+|  Detection Precision: {self.metrics.get('detection_precision', 0):.4f} ({self.metrics.get('detection_precision', 0)*100:.1f}%)  |
+|  Strict Precision:    {self.metrics.get('strict_precision', 0):.4f} ({self.metrics.get('strict_precision', 0)*100:.1f}%)  |
+|  Mean Precision:      {self.metrics.get('precision', 0):.4f} ({self.metrics.get('precision', 0)*100:.1f}%)  |
+|  Mean Recall:         {self.metrics.get('recall', 0):.4f} ({self.metrics.get('recall', 0)*100:.1f}%)  |
++--------------------------------------+
 """
             ax6.text(0.1, 0.5, final_metrics, fontsize=12, fontfamily='monospace',
                     verticalalignment='center', bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
@@ -470,25 +449,20 @@ See README.md for detailed usage instructions.
         print("🎉" * 30)
         
         print(f"""
-╔══════════════════════════════════════════════════════════╗
-║                    📊 FINAL SUMMARY                      ║
-╠══════════════════════════════════════════════════════════╣
-║  Detection precision: {self.metrics.get('precision_detection', 0):.4f}  ({self.metrics.get('precision_detection', 0)*100:.1f}%)                   ║
-║  Strict precision:    {self.metrics.get('precision_stricte', 0):.4f}  ({self.metrics.get('precision_stricte', 0)*100:.1f}%)                   ║
-║  Reliability:         {self.metrics.get('fiabilite', 0):.4f}  ({self.metrics.get('fiabilite', 0)*100:.1f}%)                   ║
-║  Detection rate:      {self.metrics.get('taux_detection', 0):.4f}  ({self.metrics.get('taux_detection', 0)*100:.1f}%)                   ║
-╠══════════════════════════════════════════════════════════╣
-║  📁 Generated files:                                     ║
-║     • pcb_model.pt (PyTorch)                             ║
-║     • pcb_model.onnx (ONNX)                              ║
-║     • pcb_model.torchscript (TorchScript)                ║
-║     • pcb_model.tflite (TensorFlow Lite)                 ║
-║     • pcb_model.mlmodel (Core ML)                        ║
-║     • pcb_model_openvino/ (OpenVINO)                     ║
-║     • training_results.png (Graphs)                      ║
-║     • sample_predictions.png (Examples)                  ║
-║     • MODEL_EXPORT_SUMMARY.md (Usage Guide)             ║
-╚══════════════════════════════════════════════════════════╝
++----------------------------------------------------------+
+|                    FINAL SUMMARY                         |
++----------------------------------------------------------+
+|  Detection Precision (mAP@0.5):     {self.metrics.get('detection_precision', 0):.4f}  ({self.metrics.get('detection_precision', 0)*100:.1f}%)  |
+|  Strict Precision (mAP@0.5:0.95):   {self.metrics.get('strict_precision', 0):.4f}  ({self.metrics.get('strict_precision', 0)*100:.1f}%)  |
+|  Mean Precision:                    {self.metrics.get('precision', 0):.4f}  ({self.metrics.get('precision', 0)*100:.1f}%)  |
+|  Mean Recall:                       {self.metrics.get('recall', 0):.4f}  ({self.metrics.get('recall', 0)*100:.1f}%)  |
++----------------------------------------------------------+
+|  Generated files:                                        |
+|     * pcb_model.pt (PyTorch)                             |
+|     * training_results.png (Graphs)                      |
+|     * sample_predictions.png (Examples)                  |
+|     * MODEL_EXPORT_SUMMARY.md (Usage Guide)              |
++----------------------------------------------------------+
 """)
         
         print(f"📂 All files in: {self.output_path}")

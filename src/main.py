@@ -56,7 +56,7 @@ def cmd_train(args: argparse.Namespace) -> None:
         config=config
     )
     metrics = trainer.run_pipeline()
-    print(f"\nFinal detection precision: {metrics.get('precision_detection', 0):.4f}")
+    print(f"\nFinal detection precision (mAP@0.5): {metrics.get('detection_precision', 0):.4f}")
 
 
 def cmd_detect(args: argparse.Namespace) -> None:
